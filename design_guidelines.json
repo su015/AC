@@ -1,0 +1,116 @@
+{
+  "project_name": "Indian Refrigeration Marketing Site",
+  "theme": "Light Theme - Cooling/Crystal Aesthetic",
+  "archetype": "Swiss & High-Contrast (Adapted for Icy/Frost context)",
+  "design_philosophy": "A modern, conversion-focused platform evoking a crisp, frigid, and refreshing feeling. Uses heavy glassmorphism, stark whites, icy blues, and subtle dynamic cooling effects to stand out from generic HVAC templates.",
+  "colors": {
+    "primary": "#0EA5E9",
+    "primary_hover": "#0284C7",
+    "accent_cyan": "#00E5FF",
+    "background_base": "#FFFFFF",
+    "background_frost": "#F0F9FF",
+    "surface_glass": "rgba(255, 255, 255, 0.75)",
+    "text_heading": "#0C4A6E",
+    "text_body": "#334155",
+    "text_muted": "#64748B",
+    "border_glass": "rgba(14, 165, 233, 0.2)",
+    "glow_cyan": "rgba(0, 229, 255, 0.4)",
+    "globe_background": "#082F49"
+  },
+  "typography": {
+    "heading_font": "Outfit, sans-serif",
+    "body_font": "Manrope, sans-serif",
+    "rules": {
+      "h1": "text-5xl md:text-6xl font-black tracking-tight text-[#0C4A6E]",
+      "h2": "text-3xl md:text-4xl font-bold tracking-tight text-[#0C4A6E]",
+      "h3": "text-xl md:text-2xl font-bold text-[#0C4A6E]",
+      "body": "text-base md:text-lg text-[#334155] leading-relaxed",
+      "overline": "text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-[#0EA5E9]"
+    }
+  },
+  "spacing_and_layout": {
+    "section_padding": "py-20 md:py-32",
+    "container": "max-w-7xl mx-auto px-6 md:px-12",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8",
+    "card_padding": "p-8 md:p-10",
+    "glass_panel": "backdrop-blur-xl bg-white/75 border border-white/40 shadow-[0_8px_32px_rgba(14,165,233,0.1)] rounded-3xl"
+  },
+  "motion_and_interactions": {
+    "hover_glow": "hover:shadow-[0_0_25px_rgba(0,229,255,0.4)] transition-shadow duration-300",
+    "hover_lift": "hover:-translate-y-2 transition-transform duration-300",
+    "scroll_reveal": "framer-motion whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 30 }}",
+    "frost_overlay": "absolute inset-0 bg-gradient-to-tr from-white/10 to-[#00E5FF]/5 pointer-events-none mix-blend-overlay",
+    "particles": "Use react-tsparticles for subtle, low-density slow-falling snow/frost particles in the hero background.",
+    "button_ripple": "Relative overflow-hidden container with an absolute scaling pseudo-element on active/click state."
+  },
+  "components": {
+    "navbar": {
+      "style": "Fixed top-0 w-full z-50 backdrop-blur-2xl bg-white/70 border-b border-sky-100/50 transition-all duration-300",
+      "elements": "Logo (left), Desktop Links (center), 'Book Service' Primary Button (right). Hamburger for mobile."
+    },
+    "mobile_bottom_bar": {
+      "style": "Fixed bottom-0 w-full z-50 flex md:hidden bg-white/90 backdrop-blur-xl border-t border-sky-100 shadow-[0_-10px_40px_rgba(14,165,233,0.15)] pb-safe",
+      "elements": "3 equal-width flex-col buttons: Call (Icon + Text), WhatsApp (Icon + Text, Green accent), Book (Icon + Text, Primary Cyan)."
+    },
+    "hero_slider": {
+      "layout": "Min-height 90vh, flex items-center. Left side: Typography & CTA. Right side: Canvas for 3D AC Model.",
+      "slider_logic": "Framer Motion AnimatePresence switching between 'AC Sales', 'AC Services', 'Accessories'.",
+      "3d_element": "Use @react-three/fiber. Render a sleek modern AC indoor unit (can be composed of R3F rounded boxes if GLTF is missing). Animate subtle cyan floating particles (cold air breeze) blowing from the AC using Three.js points/particles."
+    },
+    "products_grid": {
+      "layout": "CSS Grid, 2-4 columns. Clean white backgrounds to make product images pop.",
+      "card_style": "Glass panel with soft icy shadows. Include image, Title, Specs (Capacity, Type), and 'Enquire Now' WhatsApp button."
+    },
+    "services_bento": {
+      "layout": "Bento Grid (Mode A: Asymmetrical). Large hero service (AC Repair), smaller specialized services (Gas Refill, AMC).",
+      "card_style": "Deep padding, icon on top-left. Hover triggers a 'frost sweep' (a white translucent gradient sliding diagonally)."
+    },
+    "how_it_works": {
+      "layout": "Horizontal flex or 4-column grid with a connecting dashed cyan line. Circular step indicators with glow.",
+      "steps": "1. Book, 2. Visit, 3. Service, 4. Done."
+    },
+    "globe_service_area": {
+      "layout": "Full width or large bento container. Background MUST be dark (e.g., #082F49) to contrast the globe.",
+      "globe_config": "Use react-globe.gl. Globe color: Icy Blue. Highlight India polygon. Add a glowing pulsing HTML marker at Noida (Lat: 28.5355, Lng: 77.3910) using 'htmlElementsData'."
+    },
+    "contact_section": {
+      "layout": "Split 50/50. Left: Glassmorphic Booking Form. Right: Contact details, Click-to-call large buttons, Address.",
+      "inputs": "Shadcn-style custom inputs: bg-white/50 border-sky-200 focus:border-[#00E5FF] focus:ring-[#00E5FF] rounded-xl."
+    }
+  },
+  "media": {
+    "images": {
+      "hero_ac_product": "https://images.unsplash.com/photo-1762341123870-d706f257a12e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBhaXIlMjBjb25kaXRpb25lcnxlbnwwfHx8fDE3NzY3NTI3MTl8MA&ixlib=rb-4.1.0&q=85",
+      "ac_outdoor_unit": "https://images.pexels.com/photos/24828656/pexels-photo-24828656.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "service_technician_1": "https://images.pexels.com/photos/33755641/pexels-photo-33755641.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "service_technician_2": "https://images.pexels.com/photos/33671149/pexels-photo-33671149.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "frost_texture_bg": "https://images.pexels.com/photos/6649448/pexels-photo-6649448.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "frost_texture_glass": "https://images.pexels.com/photos/14786325/pexels-photo-14786325.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    "icons": "lucide-react (Snowflake, Wind, Thermometer, Tool, CalendarCheck, Phone, MessageCircle)"
+  },
+  "testing": {
+    "requirement": "All interactive buttons, links, form inputs, and navigation elements MUST have a descriptive 'data-testid' attribute in kebab-case."
+  },
+  "dependencies_to_install": [
+    "framer-motion",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "three",
+    "react-globe.gl",
+    "tsparticles",
+    "react-tsparticles",
+    "tsparticles-engine",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "instructions_to_main_agent": [
+    "1. Strict Palette: Do not deviate from the icy blue, stark white, and soft cyan palette. No dark mode globally, except the dark container for the globe to ensure visual pop.",
+    "2. 3D AC Model: In the Hero component, use @react-three/fiber to render an AC unit. If you do not have a .glb file, compose one using clean, rounded box geometries in Three.js, colored white. Add an animated particle stream (soft cyan points) flowing out of the bottom to simulate cold air.",
+    "3. Globe Setup: Use react-globe.gl. Set globeImageUrl to a high-res earth image or use a solid icy color. Add a ring or html marker exactly at Noida (28.5355, 77.3910).",
+    "4. Glassmorphism: Utilize the defined 'glass_panel' classes heavily to achieve the 'crystal' look.",
+    "5. WhatsApp Integration: The Accessories Shop 'Buy/Enquire' buttons should be simple `a` tags pointing to `https://wa.me/YOURNUMBER?text=...`",
+    "6. Mobile Bottom Bar: Ensure the floating mobile bottom bar has z-index high enough and stays fixed. Add `pb-24` to the main layout to prevent content from hiding behind it."
+  ]
+}

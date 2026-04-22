@@ -1,0 +1,5 @@
+/* App.js-specific styles (kept minimal; most styling via Tailwind + index.css) */
+.App {
+    position: relative;
+    min-height: 100vh;
+}
