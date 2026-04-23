@@ -1,11 +1,13 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
+import { useNavigate, Link } from "react-router-dom";
 import {
   MessageCircle,
   Radio,
   Waves,
   Wrench,
   Shield,
+  ShoppingBag
 } from "lucide-react";
 import siteConfig from "../config/siteConfig";
 import TextType from "./ui/TextType";
@@ -25,8 +27,11 @@ const GRADIENTS = {
 };
 
 import TiltedCard from "./ui/TiltedCard";
+import { useCart } from "../context/CartContext";
 
 const ShopSection = () => {
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
   const containerRef = useRef(null);
   const waHref = (name, price) =>
     `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
@@ -67,59 +72,74 @@ const ShopSection = () => {
         </motion.div>
 
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {siteConfig.accessories.map((a, i) => {
-            const Icon = ICONS[a.id] || Radio;
-            const grad = GRADIENTS[a.id] || GRADIENTS.remote;
-            return (
-              <motion.div
-                key={a.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.06 }}
-              >
-                <TiltedCard
-                  imageSrc={a.image}
-                  altText={a.name}
-                  captionText={a.name}
-                  containerHeight="380px"
-                  showTooltip={true}
-                  displayOverlayContent={true}
-                  overlayContent={
-                    <div className="absolute inset-0 p-4 flex flex-col justify-between">
-                      <div className="flex items-start justify-between">
-                         <div className={`w-10 h-10 rounded-lg flex items-center justify-center bg-white/90 dark:bg-slate-900/90 shadow-sm`}>
-                            <Icon className="w-5 h-5 text-sky-600" />
-                         </div>
-                         <span className="bg-white/90 dark:bg-slate-900/90 text-sky-700 dark:text-sky-400 text-[10px] font-black px-2 py-1 rounded shadow-sm">
-                            {a.price}
-                         </span>
-                      </div>
-                      
-                      <div className="ir-glass dark:bg-slate-900/80 rounded-2xl p-4 border border-white/20 backdrop-blur-md">
-                        <h3 className="font-display text-sm md:text-base font-bold text-[#0C4A6E] dark:text-sky-100 line-clamp-1">
-                          {a.name}
-                        </h3>
-                        <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400 line-clamp-2">
-                          {a.description}
-                        </p>
-                        <a
-                          href={waHref(a.name, a.price)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-3 w-full inline-flex items-center justify-center gap-2 text-[10px] font-bold bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg transition-colors"
-                        >
-                          <MessageCircle className="w-3 h-3" />
-                          Enquire
-                        </a>
-                      </div>
-                    </div>
-                  }
+          {siteConfig.shopProducts.slice(0, 4).map((product, i) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              onClick={() => navigate(`/product/${product.id}`)}
+              className="group cursor-pointer bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-500 border border-sky-100 dark:border-slate-800"
+            >
+              {/* Image Section */}
+              <div className="relative aspect-[4/3] bg-gradient-to-br from-sky-400 to-blue-600 dark:from-sky-500 dark:to-blue-700 overflow-hidden">
+                <motion.img 
+                  src={product.image} 
+                  alt={product.name}
+                  whileHover={{ scale: 1.1 }}
+                  className="w-full h-full object-cover drop-shadow-2xl"
                 />
-              </motion.div>
-            );
-          })}
+              </div>
+
+              {/* Content Section */}
+              <div className="p-4 md:p-6 flex flex-col flex-1">
+                <h3 className="text-lg md:text-2xl font-black text-slate-800 dark:text-white mb-2 md:mb-3 group-hover:text-sky-500 transition-colors line-clamp-1">
+                  {product.name}
+                </h3>
+                
+                <div className="flex flex-wrap gap-2 mb-3 md:mb-4">
+                  <span className="px-2 md:px-3 py-1 md:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                    {product.brand}
+                  </span>
+                </div>
+
+                <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3 md:gap-4">
+                  <div>
+                    <span className="block text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5 md:mb-1">Price</span>
+                    <span className="text-xl md:text-2xl font-black text-slate-800 dark:text-white">₹{product.price.toLocaleString()}</span>
+                  </div>
+                  
+                  <motion.button 
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToCart(product);
+                    }}
+                    className="bg-sky-500 hover:bg-sky-600 text-white px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-[10px] md:text-sm transition-all shadow-xl shadow-sky-500/20 w-full sm:w-auto"
+                  >
+                    Add to cart
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 flex justify-center"
+        >
+          <Link 
+            to="/shop"
+            className="group flex items-center gap-3 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-sky-100 dark:border-slate-800 px-8 py-4 rounded-2xl font-bold text-sky-700 dark:text-sky-400 hover:bg-sky-500 hover:text-white hover:border-sky-400 transition-all shadow-xl shadow-sky-500/5"
+          >
+            View All Accessories
+            <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

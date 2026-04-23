@@ -1,20 +1,73 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Snowflake, CalendarCheck } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { Menu, X, Snowflake, ShoppingBag, LogIn, UserPlus } from "lucide-react";
 import siteConfig from "../config/siteConfig";
 import ThemeToggle from "./ThemeToggle";
 import GooeyNav from "./ui/GooeyNav";
 import Magnetic from "./ui/Magnetic";
 
 const Navbar = () => {
+  const { totalItems, totalPrice } = useCart();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    
+    // Scroll Spy Logic
+    const sections = ["services", "shop", "contact"];
+    const observers = sections.map(id => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActiveSection(id);
+          }
+        });
+      }, { threshold: 0.3, rootMargin: "-80px 0px -50% 0px" });
+
+      observer.observe(el);
+      return observer;
+    });
+
+    // Reset to home if at top
+    const topObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) setActiveSection(null);
+    }, { threshold: 0.1 });
+    const hero = document.getElementById('home');
+    if (hero) topObserver.observe(hero);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      observers.forEach(o => o?.disconnect());
+      topObserver.disconnect();
+    };
   }, []);
+
+  // Determine active index based on current path, hash, or scroll position
+  const activeIndex = siteConfig.navigation.findIndex(item => {
+    // If we have an active section from scroll spy, prioritize it for the home page
+    if (location.pathname === "/") {
+      if (!activeSection && item.href === "/") return true;
+      if (activeSection && item.href.includes(`#${activeSection}`)) return true;
+    }
+    
+    // Fallback to URL matching
+    if (item.href === "/") return location.pathname === "/" && !location.hash;
+    if (item.href.startsWith("/#")) {
+      return location.pathname === "/" && location.hash === item.href.replace("/", "");
+    }
+    return location.pathname.startsWith(item.href);
+  });
+
+  const safeActiveIndex = activeIndex === -1 ? 0 : activeIndex;
 
   return (
     <header
@@ -26,8 +79,8 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 md:h-20 flex items-center justify-between">
-        <a
-          href="#home"
+        <Link
+          to="/"
           data-testid="brand-link"
           className="flex items-center gap-2 group"
         >
@@ -42,24 +95,72 @@ const Navbar = () => {
               Sector 31 · Noida
             </span>
           </div>
-        </a>
+        </Link>
 
         <nav className="hidden md:flex items-center">
-          <GooeyNav items={siteConfig.navigation} />
+          <GooeyNav items={siteConfig.navigation} activeIndex={safeActiveIndex} />
         </nav>
 
         <div className="flex items-center gap-2 md:gap-4">
           <ThemeToggle />
-          <Magnetic>
-            <a
-              href="#contact"
-              data-testid="navbar-book-btn"
-              className="hidden lg:flex ir-btn items-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-400 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-lg shadow-sky-300/40"
+          <Link
+            to="/cart"
+            className="relative flex items-center gap-2 p-2 px-3 rounded-xl border border-sky-100 dark:border-slate-800 bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-700 transition-all group"
+          >
+            <div className="relative">
+              <ShoppingBag className="w-5 h-5 text-sky-600 dark:text-sky-400 group-hover:scale-110 transition-transform" />
+              <AnimatePresence>
+                {totalItems > 0 && (
+                  <motion.span
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-sky-500 text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-lg shadow-sky-500/40"
+                  >
+                    {totalItems}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
+            
+            <AnimatePresence>
+              {totalPrice > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  className="hidden sm:flex flex-col items-start leading-none pr-1"
+                >
+                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Cart Total</span>
+                  <span className="text-[13px] font-black text-sky-600 dark:text-sky-400">₹{totalPrice.toLocaleString()}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Link>
+          <div className="hidden lg:flex items-center gap-6 ml-2">
+            <Link 
+              to="/auth" 
+              state={{ mode: 'login' }}
+              className="flex items-center gap-2 text-sm font-bold text-[#0C4A6E] dark:text-sky-100 hover:text-sky-500 transition-colors group"
             >
-              <CalendarCheck className="w-4 h-4" />
-              Book Service
-            </a>
-          </Magnetic>
+              <motion.div whileHover={{ x: 3 }} transition={{ type: "spring", stiffness: 400 }}>
+                  <LogIn className="w-4 h-4 text-sky-500" />
+              </motion.div>
+              Login
+            </Link>
+            <Magnetic>
+              <Link
+                to="/auth"
+                state={{ mode: 'signup' }}
+                className="ir-btn flex items-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-400 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-lg shadow-sky-300/40"
+              >
+                <motion.div whileHover={{ rotate: 15 }} transition={{ type: "spring", stiffness: 400 }}>
+                    <UserPlus className="w-4 h-4" />
+                </motion.div>
+                Sign Up
+              </Link>
+            </Magnetic>
+          </div>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -79,35 +180,54 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden border-t border-sky-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl overflow-hidden"
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden border-t border-sky-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl overflow-hidden overscroll-contain"
           >
             <div className="px-6 py-8 flex flex-col gap-2">
-              {siteConfig.navigation.map((n, i) => (
-                <motion.a
-                  key={n.href}
-                  href={n.href}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 + 0.1 }}
+              {siteConfig.navigation.map((n, i) => {
+                const isInternal = n.href.startsWith("/");
+                const Component = isInternal ? Link : "a";
+                const props = isInternal ? { to: n.href } : { href: n.href };
+                
+                return (
+                  <motion.div
+                    key={n.href}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 + 0.1 }}
+                  >
+                    <Component
+                      {...props}
+                      onClick={() => setOpen(false)}
+                      data-testid={`mobile-nav-${n.label.toLowerCase()}`}
+                      className="py-3 text-lg font-bold text-[#0C4A6E] dark:text-sky-100 border-b border-sky-50 dark:border-slate-800/50 flex items-center justify-between group"
+                    >
+                      {n.label}
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    </Component>
+                  </motion.div>
+                );
+              })}
+              <div className="flex flex-col gap-3 mt-4">
+                <Link
+                  to="/auth"
+                  state={{ mode: 'login' }}
                   onClick={() => setOpen(false)}
-                  data-testid={`mobile-nav-${n.label.toLowerCase()}`}
-                  className="py-3 text-lg font-bold text-[#0C4A6E] dark:text-sky-100 border-b border-sky-50 dark:border-slate-800/50 flex items-center justify-between group"
+                  className="flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-[#0C4A6E] dark:text-sky-100 border border-sky-100 dark:border-slate-800"
                 >
-                  {n.label}
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                </motion.a>
-              ))}
-              <motion.a
-                href="#contact"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                onClick={() => setOpen(false)}
-                className="mt-6 text-center bg-gradient-to-r from-sky-500 to-cyan-400 text-white py-4 rounded-2xl font-bold shadow-xl shadow-sky-500/20"
-              >
-                Book Service Now
-              </motion.a>
+                  <LogIn className="w-5 h-5 text-sky-500" />
+                  Login
+                </Link>
+                <Link
+                  to="/auth"
+                  state={{ mode: 'signup' }}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-400 text-white py-4 rounded-2xl font-bold shadow-xl shadow-sky-500/20"
+                >
+                  <UserPlus className="w-5 h-5" />
+                  Sign Up
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}

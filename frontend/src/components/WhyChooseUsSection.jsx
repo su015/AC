@@ -36,15 +36,13 @@ const WhyChooseUsSection = () => {
 
         <style>
           {`
-            .hover-container:hover .hover-card:not(:hover) {
-              filter: blur(10px);
-              transform: scale(0.9);
-            }
             .hover-card {
-              transition: 400ms;
+              transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
             }
             .hover-card:hover {
-              transform: scale(1.1);
+              transform: translateY(-10px) scale(1.05);
+              border-color: rgba(14, 165, 233, 0.3);
+              box-shadow: 0 20px 40px -10px rgba(14, 165, 233, 0.15);
             }
           `}
         </style>

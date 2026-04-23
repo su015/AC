@@ -25,7 +25,7 @@ const WeatherMonitor = () => {
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 1, duration: 0.8 }}
-      className="fixed bottom-24 md:top-24 left-4 md:left-6 z-[40]"
+      className="hidden md:block fixed md:top-24 left-4 md:left-6 z-[40]"
     >
       <motion.div
         whileHover={{ scale: 1.05, y: -5 }}

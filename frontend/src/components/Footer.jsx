@@ -1,5 +1,6 @@
 import React from "react";
 import { Snowflake, PhoneCall, MessageCircle, Mail, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import siteConfig from "../config/siteConfig";
 
 const Footer = () => {
@@ -51,9 +52,15 @@ const Footer = () => {
           <ul className="space-y-2 text-sm text-slate-500 dark:text-sky-200/80">
             {siteConfig.navigation.map((n) => (
               <li key={n.href}>
-                <a href={n.href} className="hover:text-sky-600 dark:hover:text-cyan-300 transition-colors">
-                  {n.label}
-                </a>
+                {n.href.startsWith("/") ? (
+                  <Link to={n.href} className="hover:text-sky-600 dark:hover:text-cyan-300 transition-colors">
+                    {n.label}
+                  </Link>
+                ) : (
+                  <a href={n.href} className="hover:text-sky-600 dark:hover:text-cyan-300 transition-colors">
+                    {n.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

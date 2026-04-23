@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const GooeyNav = ({
   items,
@@ -8,13 +9,18 @@ const GooeyNav = ({
   particleR = 100,
   timeVariance = 300,
   colors = ['#0EA5E9', '#00E5FF', '#38BDF8', '#22D3EE'],
-  initialActiveIndex = 0
+  activeIndex: controlledActiveIndex = 0
 }) => {
   const containerRef = useRef(null);
   const navRef = useRef(null);
   const filterRef = useRef(null);
   const textRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
+  const [activeIndex, setActiveIndex] = useState(controlledActiveIndex);
+
+  // Sync internal activeIndex with prop
+  useEffect(() => {
+    setActiveIndex(controlledActiveIndex);
+  }, [controlledActiveIndex]);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -105,8 +111,20 @@ const GooeyNav = ({
   };
 
   const handleClick = (e, index, href) => {
-    // If it's a hash link, let the browser handle it or scroll manually
     const liEl = e.currentTarget.parentElement;
+    
+    // Handle smooth scroll for hash links
+    if (href.includes('#')) {
+      const id = href.split('#')[1];
+      const element = document.getElementById(id);
+      if (element) {
+        e.preventDefault();
+        element.scrollIntoView({ behavior: 'smooth' });
+        // Update URL hash without reload
+        window.history.pushState(null, '', href);
+      }
+    }
+
     if (activeIndex === index) return;
     
     setActiveIndex(index);
@@ -301,13 +319,23 @@ const GooeyNav = ({
                   activeIndex === index ? 'active' : ''
                 }`}
               >
-                <a
-                  href={item.href}
-                  onClick={e => handleClick(e, index, item.href)}
-                  className="outline-none py-2 px-4 inline-block text-[13px] font-bold uppercase tracking-wider"
-                >
-                  {item.label}
-                </a>
+                {item.href.startsWith("/") ? (
+                  <Link
+                    to={item.href}
+                    onClick={e => handleClick(e, index, item.href)}
+                    className="outline-none py-2 px-4 inline-block text-[13px] font-bold uppercase tracking-wider"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    href={item.href}
+                    onClick={e => handleClick(e, index, item.href)}
+                    className="outline-none py-2 px-4 inline-block text-[13px] font-bold uppercase tracking-wider"
+                  >
+                    {item.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

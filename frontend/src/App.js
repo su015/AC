@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
 
@@ -8,9 +8,11 @@ import SnowParticles from "./components/SnowParticles";
 import WeatherMonitor from "./components/ui/WeatherMonitor";
 import Preloader from "./components/ui/Preloader";
 import HeroSlider from "./components/HeroSlider";
-import ProductsSection from "./components/ProductsSection";
+
 import ServicesSection from "./components/ServicesSection";
 import ShopSection from "./components/ShopSection";
+import ShopPage from "./components/ShopPage";
+import ProductDetailsPage from "./components/ProductDetailsPage";
 import HowItWorksSection from "./components/HowItWorksSection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
 import GlobeSection from "./components/GlobeSection";
@@ -23,6 +25,11 @@ import ScrollProgress from "./components/ui/ScrollProgress";
 import LogoCarousel from "./components/ui/LogoCarousel";
 import siteConfig from "./config/siteConfig";
 import { Phone, MessageCircle, CalendarCheck, Home as HomeIcon } from "lucide-react";
+
+import { CartProvider } from "./context/CartContext";
+import CartPage from "./components/CartPage";
+import AuthPage from "./components/AuthPage";
+
 
 const Home = () => {
   const dockItems = [
@@ -57,7 +64,7 @@ const Home = () => {
         <main>
           <HeroSlider />
           <LogoCarousel />
-          <ProductsSection />
+
           <ServicesSection />
           <ShopSection />
           <HowItWorksSection />
@@ -76,17 +83,30 @@ const Home = () => {
   );
 };
 
+
+const ConditionalWeatherMonitor = () => {
+  const location = useLocation();
+  if (location.pathname === '/auth') return null;
+  return <WeatherMonitor />;
+};
+
 function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <Preloader />
-      <WeatherMonitor />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster position="top-right" richColors />
+      <CartProvider>
+        <Preloader />
+        <BrowserRouter>
+          <ConditionalWeatherMonitor />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/product/:id" element={<ProductDetailsPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster position="top-right" richColors />
+      </CartProvider>
     </ThemeProvider>
   );
 }

@@ -51,22 +51,13 @@ const siteConfig = {
     stickyMobileBar: true,
   },
   navigation: [
-    { label: "Home", href: "#home" },
-    { label: "Products", href: "#products" },
-    { label: "Services", href: "#services" },
-    { label: "Shop", href: "#shop" },
-    { label: "Contact", href: "#contact" },
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/#services" },
+    { label: "Shop", href: "/shop" },
+    { label: "Contact", href: "/#contact" },
   ],
   heroSlides: [
-    {
-      key: "sales",
-      eyebrow: "AC Sales",
-      title: "Premium Air Conditioners, Installed With Care.",
-      subtitle:
-        "Split, Window, Cassette & Commercial ACs from the world's top brands — at the most honest prices in Noida.",
-      primaryCta: { label: "Explore Products", href: "#products" },
-      secondaryCta: { label: "Talk To Expert", href: "#contact" },
-    },
+
     {
       key: "services",
       eyebrow: "Repair & Service",
@@ -86,48 +77,7 @@ const siteConfig = {
       secondaryCta: { label: "WhatsApp Us", href: "whatsapp" },
     },
   ],
-  products: [
-    {
-      id: "split",
-      name: "Split AC",
-      specs: "1.0 – 2.0 Ton · Inverter · 5 Star",
-      description:
-        "Whisper-quiet cooling for bedrooms, living rooms & offices. Best-selling category.",
-      image: "https://images.unsplash.com/photo-1545259741-2ea3ebf61fa3?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      id: "window",
-      name: "Window AC",
-      specs: "0.75 – 1.5 Ton · Fixed Speed · 3 Star+",
-      description:
-        "Compact, budget-friendly cooling — ideal for smaller rooms and rentals.",
-      image: "/images/window.png",
-    },
-    {
-      id: "cassette",
-      name: "Cassette AC",
-      specs: "2.0 – 4.0 Ton · 4-Way Airflow",
-      description:
-        "Ceiling-mounted luxury cooling for boardrooms, restaurants and showrooms.",
-      image: "https://images.unsplash.com/photo-1621905252507-b354bc2d18c4?auto=format&fit=crop&w=800&q=80",
-    },
-    {
-      id: "duct",
-      name: "Duct AC",
-      specs: "3.0 – 11.0 Ton · Concealed",
-      description:
-        "Hidden central cooling — uniform comfort for large homes and commercial spaces.",
-      image: "/images/duct.png",
-    },
-    {
-      id: "vrf",
-      name: "VRF Systems",
-      specs: "8 – 60 HP · Multi-Zone",
-      description:
-        "Intelligent, zoned cooling for offices, hotels & retail — designed, supplied & installed.",
-      image: "/images/vrf.png",
-    },
-  ],
+
   services: [
     {
       id: "install",
@@ -178,39 +128,202 @@ const siteConfig = {
       image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
     },
   ],
-  accessories: [
+  shopProducts: [
     {
-      id: "remote",
+      id: "split-daikin-15",
+      name: "Daikin 1.5 Ton 5 Star Inverter Split AC",
+      category: "AC",
+      price: 44500,
+      brand: "Daikin",
+      image: "https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png",
+      images: [
+        "https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png",
+        "https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946"
+      ],
+      description: "Model No. : FTKL50UV16 1.5 Ton, suitable for room size up to 150 sq ft. 5 Star BEE Rating 2024. PM 2.5 filter. Energy efficient, best-in-class cooling with easy maintenance. Econo Mode: Auto-adjusts the temperature to ensure comfort during your sleep. Warranty: 1 year comprehensive, 5 years on PCB, 10 Years on compressor.",
+      specs: { capacity: "1.5 Ton", rating: "5 Star", type: "Inverter Split", warranty: "1 Year Comprehensive" },
+      features: ["PM 2.5 Filter", "Triple Display", "Dew Clean Technology", "100% Copper"]
+    },
+    {
+      id: "window-lg-15",
+      name: "LG 1.5 Ton 3 Star Dual Inverter Window AC",
+      category: "AC",
+      price: 32900,
+      brand: "LG",
+      image: "https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946",
+      images: ["https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946"],
+      description: "LG Window AC with Dual Inverter Compressor: Varied speed dual rotary motor has a wider rotational frequency which saves more energy along with higher speed cooling range than conventional compressors.",
+      specs: { capacity: "1.5 Ton", rating: "3 Star", type: "Window AC", warranty: "1 Year" },
+      features: ["Dual Inverter", "Clean Air Filter", "Top Discharge", "Low Gas Detection"]
+    },
+    {
+      id: "split-blue-star-15",
+      name: "Blue Star 1.5 Ton 5 Star Inverter Split AC",
+      category: "AC",
+      price: 46900,
+      brand: "Blue Star",
+      image: "https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png",
+      images: ["https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png"],
+      description: "Blue Star Inverter Split AC with Brushless DC motor for high reliability and noise-less operation.",
+      specs: { capacity: "1.5 Ton", rating: "5 Star", type: "Inverter", warranty: "1 Year" },
+      features: ["Dust Filter", "Self Diagnosis", "Eco Mode", "Hidden Display"]
+    },
+    {
+      id: "split-samsung-20",
+      name: "Samsung 2.0 Ton 3 Star Inverter Split AC",
+      category: "AC",
+      price: 52000,
+      brand: "Samsung",
+      image: "https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946",
+      images: ["https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946"],
+      description: "Powerful cooling for large living rooms. Digital Inverter Boost technology cools the air 43% faster.",
+      specs: { capacity: "2.0 Ton", rating: "3 Star", type: "Inverter", warranty: "1 Year" },
+      features: ["Fast Cooling", "Tri-Care Filter", "Auto Clean", "Good Sleep Mode"]
+    },
+    {
+      id: "cassette-daikin-30",
+      name: "Daikin 3.0 Ton Cassette AC",
+      category: "AC",
+      price: 88000,
+      brand: "Daikin",
+      image: "https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png",
+      images: ["https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png"],
+      description: "Ceiling-mounted cooling for commercial spaces. 4-way airflow ensures uniform temperature distribution.",
+      specs: { capacity: "3.0 Ton", rating: "Non-Star", type: "Cassette", warranty: "1 Year" },
+      features: ["4-Way Airflow", "Silent Operation", "Fresh Air Intake", "Easy Maintenance"]
+    },
+    {
+      id: "remote-uni",
       name: "Universal AC Remote",
-      price: "₹299",
-      image:
-        "https://images.pexels.com/photos/9644760/pexels-photo-9644760.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800",
-      description: "Works with 1000+ AC models. Instant replacement for lost remotes.",
+      category: "Accessory",
+      price: 299,
+      brand: "Universal",
+      image: "https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946",
+      images: ["https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946"],
+      description: "Works with 1000+ AC models including Daikin, LG, Samsung, Voltas, and more.",
+      specs: { range: "10 Meters", battery: "2 x AAA", compatibility: "1000+ Brands" },
+      features: ["LCD Display", "Auto-Search", "Night Glow Buttons"]
     },
     {
-      id: "hose",
-      name: "Exhaust Hose (6ft)",
-      price: "₹649",
-      image:
-        "https://images.pexels.com/photos/6667356/pexels-photo-6667356.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800",
-      description: "Heavy-duty flexible exhaust for portable & window ACs.",
+      id: "remote-lg",
+      name: "LG Original AC Remote",
+      category: "Accessory",
+      price: 750,
+      brand: "LG",
+      image: "https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png",
+      images: ["https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png"],
+      description: "Original replacement remote for all LG Inverter and Non-Inverter split ACs.",
+      specs: { compatibility: "LG Split ACs", range: "8 Meters", battery: "2 x AAA" },
+      features: ["Energy Save Button", "Timer Function", "Mode Selection"]
     },
     {
-      id: "adapter",
-      name: "Vacuum Port Adapter Kit",
-      price: "₹399",
-      image:
-        "https://images.pexels.com/photos/4480505/pexels-photo-4480505.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800",
-      description: "Complete brass adapter set for R-32 / R-410A servicing.",
+      id: "pcb-universal",
+      name: "Universal Split AC PCB Kit",
+      category: "Accessory",
+      price: 1250,
+      brand: "Indian Ref",
+      image: "https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946",
+      images: ["https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946"],
+      description: "Full logic control PCB kit for repairing old split ACs.",
+      specs: { voltage: "220V", types: "Universal", includes: "Remote + PCB" },
+      features: ["Auto Restart", "5 Working Modes", "Fan Speed Control"]
     },
     {
-      id: "cover",
-      name: "Outdoor AC Cover",
-      price: "₹499",
-      image:
-        "https://images.pexels.com/photos/7641845/pexels-photo-7641845.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=800",
-      description: "UV & weatherproof cover — extends outdoor unit life by years.",
+      id: "gas-r32",
+      name: "R-32 Refrigerant Gas (1kg Can)",
+      category: "Accessory",
+      price: 1100,
+      brand: "Floron",
+      image: "https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png",
+      images: ["https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png"],
+      description: "Pure R-32 refrigerant for modern inverter ACs.",
+      specs: { weight: "1kg", type: "R-32", purity: "99.9%" },
+      features: ["Eco-Friendly", "High Efficiency", "Sealed Packaging"]
     },
+    {
+      id: "bracket-outdoor",
+      name: "Heavy Duty Outdoor Unit Bracket",
+      category: "Accessory",
+      price: 950,
+      brand: "Generic",
+      image: "https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946",
+      images: ["https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946"],
+      description: "Wall mounting bracket for outdoor units. Made of galvanized steel.",
+      specs: { material: "Galvanized Steel", capacity: "Up to 100kg", coating: "Powder Coated" },
+      features: ["Anti-Vibration Pads", "Easy Assembly", "Rust Proof"]
+    },
+    {
+      id: "copper-pipe",
+      name: "Copper Pipe Set (10ft) with Insulation",
+      category: "Accessory",
+      price: 2400,
+      brand: "Mandev",
+      image: "https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png",
+      images: ["https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png"],
+      description: "Pre-flared copper tubes for 1.5 Ton AC installation.",
+      specs: { length: "10 Feet", sizes: "1/4\" & 1/2\"", insulation: "6mm Foam" },
+      features: ["99.9% Pure Copper", "Seamless Finish", "Easy Bending"]
+    },
+    {
+      id: "drain-pipe",
+      name: "Flexible AC Drain Pipe (15ft)",
+      category: "Accessory",
+      price: 350,
+      brand: "ProWash",
+      image: "https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946",
+      images: ["https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946"],
+      description: "Corrugated flexible pipe for water drainage.",
+      specs: { length: "15 Feet", diameter: "16mm", material: "UV-PVC" },
+      features: ["Highly Flexible", "Long Lasting", "Standard Fit"]
+    },
+    {
+      id: "stabilizer-vguard",
+      name: "V-Guard AC Stabilizer (i4 Magno)",
+      category: "Accessory",
+      price: 2650,
+      brand: "V-Guard",
+      image: "https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png",
+      images: ["https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png"],
+      description: "Digital display voltage stabilizer for 1.5 Ton AC.",
+      specs: { capacity: "12 Amps", range: "170V - 280V", display: "Digital" },
+      features: ["ITDS Technology", "Thermal Overload Protection", "Compact Design"]
+    },
+    {
+      id: "hose-heavy",
+      name: "Exhaust Hose (6ft) for Portable AC",
+      category: "Accessory",
+      price: 649,
+      brand: "Generic",
+      image: "https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946",
+      images: ["https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946"],
+      description: "High-quality flexible polypropylene exhaust hose.",
+      specs: { length: "6 Feet", diameter: "5 Inches", material: "Polypropylene" },
+      features: ["Heat Resistant", "Flexible", "Easy Installation"]
+    },
+    {
+      id: "capacitor-kelvin",
+      name: "Kelvin Running Capacitor (45uF)",
+      category: "Accessory",
+      price: 180,
+      brand: "Kelvin",
+      image: "https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png",
+      images: ["https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/UiiN8IXLJ-BPL-Inverter-Split-AC-1.5T-3-Star-BAS-V183ATFC5.png"],
+      description: "Heavy-duty motor starter capacitor for compressor stability.",
+      specs: { value: "45uF", voltage: "440V AC", frequency: "50/60 Hz" },
+      features: ["Aluminum Shell", "Long Life Span", "Stable Performance"]
+    },
+    {
+      id: "cleaning-prowash",
+      name: "ProWash AC Service Wash Bag",
+      category: "Accessory",
+      price: 899,
+      brand: "ProWash",
+      image: "https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946",
+      images: ["https://kaydeeelectronics.in/cdn/shop/files/untitled-design-17-1-676674255a2f3.webp?v=1734768186&width=1946"],
+      description: "Professional split AC cleaning cover with drainage pipe.",
+      specs: { material: "Waterproof PVC", hoseLength: "2 Meters", compatibility: "1.0 - 2.0 Ton Split AC" },
+      features: ["Elastic Fastening", "Full Protection", "Reusable"]
+    }
   ],
   howItWorks: [
     { step: 1, title: "Book", desc: "Call, WhatsApp or fill the form in 30 seconds." },
