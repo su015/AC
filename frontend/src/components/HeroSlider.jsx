@@ -166,6 +166,7 @@ const HeroSlider = () => {
           </AnimatePresence>
 
           {/* slider controls */}
+          {/* slider controls (Dots only) */}
           <div className="mt-10 flex items-center gap-4">
             <div className="flex gap-2">
               {slides.map((s, i) => (
@@ -181,26 +182,6 @@ const HeroSlider = () => {
                   }`}
                 />
               ))}
-            </div>
-            <div className="flex gap-1 ml-2">
-              <button
-                type="button"
-                onClick={() => go(-1)}
-                data-testid="hero-prev"
-                aria-label="Previous slide"
-                className="w-9 h-9 rounded-full border border-sky-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800 text-sky-700 dark:text-sky-400 hover:bg-white dark:hover:bg-slate-700 flex items-center justify-center"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => go(1)}
-                data-testid="hero-next"
-                aria-label="Next slide"
-                className="w-9 h-9 rounded-full border border-sky-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800 text-sky-700 dark:text-sky-400 hover:bg-white dark:hover:bg-slate-700 flex items-center justify-center"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
             </div>
           </div>
 
@@ -235,7 +216,7 @@ const HeroSlider = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-sky-400/10 to-cyan-400/10 blur-[120px] rounded-full" />
           
           <div className="relative w-full h-full flex items-center justify-center">
-            {/* Trust Badges - Outside AnimatePresence for stability */}
+            {/* Trust Badges */}
             <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -262,7 +243,6 @@ const HeroSlider = () => {
                 className="relative w-full h-full flex items-center justify-center"
               >
                 <div className="relative group">
-                  {/* Floating Glow */}
                   <div className="absolute -inset-6 bg-sky-400/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   
                   <img 
@@ -275,6 +255,24 @@ const HeroSlider = () => {
             </AnimatePresence>
           </div>
         </div>
+      </div>
+
+      {/* Side Navigation Buttons */}
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 md:px-10 pointer-events-none z-30">
+        <button
+          onClick={() => go(-1)}
+          className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-sky-100/20 bg-white/5 dark:bg-slate-900/20 backdrop-blur-xl flex items-center justify-center text-sky-500 hover:text-sky-400 hover:bg-white/10 transition-all pointer-events-auto active:scale-90 group"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 group-hover:-translate-x-1 transition-transform" />
+        </button>
+        <button
+          onClick={() => go(1)}
+          className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-sky-100/20 bg-white/5 dark:bg-slate-900/20 backdrop-blur-xl flex items-center justify-center text-sky-500 hover:text-sky-400 hover:bg-white/10 transition-all pointer-events-auto active:scale-90 group"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-1 transition-transform" />
+        </button>
       </div>
     </section>
   );
