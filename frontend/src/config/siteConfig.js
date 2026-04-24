@@ -55,6 +55,13 @@ const siteConfig = {
     { label: "Services", href: "/#services" },
     { label: "Shop", href: "/shop" },
     { label: "Contact", href: "/#contact" },
+    { 
+      label: "More", 
+      children: [
+        { label: "Gallery", href: "/gallery" },
+        { label: "Videos", href: "/videos" },
+      ]
+    },
   ],
   heroSlides: [
 
@@ -64,6 +71,7 @@ const siteConfig = {
       title: "Same-Day AC Service By Certified Technicians.",
       subtitle:
         "Gas refilling, deep cleaning, installation & AMC — fast response across Sector 31 and all of Noida.",
+      image: "/images/hero_repairman.png",
       primaryCta: { label: "Book Service", href: "#contact" },
       secondaryCta: { label: "View Services", href: "#services" },
     },
@@ -73,6 +81,7 @@ const siteConfig = {
       title: "Genuine AC Accessories, Delivered Locally.",
       subtitle:
         "Remotes, hoses, covers, adapters — everything your AC needs. Enquire on WhatsApp for instant quotes.",
+      image: "/images/hero_accessories.png",
       primaryCta: { label: "Shop Now", href: "#shop" },
       secondaryCta: { label: "WhatsApp Us", href: "whatsapp" },
     },
@@ -323,6 +332,28 @@ const siteConfig = {
       description: "Professional split AC cleaning cover with drainage pipe.",
       specs: { material: "Waterproof PVC", hoseLength: "2 Meters", compatibility: "1.0 - 2.0 Ton Split AC" },
       features: ["Elastic Fastening", "Full Protection", "Reusable"]
+    }
+  ],
+  accessories: [
+    {
+      id: "hose",
+      name: "AC Exhaust Hose",
+      image: "/images/ac_exhaust_hose.png"
+    },
+    {
+      id: "remote",
+      name: "Remote Control",
+      image: "/images/ac_remote.png"
+    },
+    {
+      id: "adapter",
+      name: "Vacuum Port Adapter",
+      image: "/images/vacuum_adapter.png"
+    },
+    {
+      id: "cover",
+      name: "AC Covers",
+      image: "/images/ac_cover.png"
     }
   ],
   howItWorks: [

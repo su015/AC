@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, Suspense, lazy } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Navigation } from "lucide-react";
 import siteConfig from "../config/siteConfig";
-import TextType from "./ui/TextType";
+import SectionLabel from "./ui/SectionLabel";
 
 const Globe = lazy(() => import("react-globe.gl"));
 
@@ -77,7 +77,7 @@ const GlobeSection = () => {
   return (
     <section
       data-testid="globe-section"
-      className="relative py-20 md:py-28 bg-[#082F49] overflow-hidden"
+      className="relative py-12 md:py-16 bg-[#082F49] overflow-hidden"
     >
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
@@ -86,29 +86,18 @@ const GlobeSection = () => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <div
           ref={textContainerRef}
         >
-          <span className="text-xs md:text-sm font-bold uppercase tracking-[0.24em] text-cyan-300">
-            Service Area
-          </span>
+          <SectionLabel icon={MapPin} label="Service Area" />
           <h2 className="mt-3 font-display text-3xl md:text-5xl font-black text-white leading-tight">
             Rooted in <span className="text-cyan-300">Sector 31</span>.
             Serving all of Noida.
           </h2>
           <div className="mt-5 text-sky-100/80 text-base md:text-lg max-w-xl">
-            <TextType
-              text="We're a local, family-run business. That's why we can reach you faster, charge fairer, and stand behind every job with a 90-day warranty."
-              typingSpeed={40}
-              startOnVisible={true}
-              showCursor={true}
-              cursorCharacter="_"
-              loop={false}
-            />
+            <p>
+              We're a local, family-run business. That's why we can reach you faster, charge fairer, and stand behind every job with a 90-day warranty.
+            </p>
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-3 max-w-md">
@@ -142,7 +131,7 @@ const GlobeSection = () => {
               {siteConfig.contact.address.full}
             </a>
           </div>
-        </motion.div>
+        </div>
 
         <div
           ref={wrapRef}

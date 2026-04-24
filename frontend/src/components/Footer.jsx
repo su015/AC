@@ -50,17 +50,19 @@ const Footer = () => {
         <div>
           <h4 className="font-display text-[#0C4A6E] dark:text-white font-bold mb-4">Explore</h4>
           <ul className="space-y-2 text-sm text-slate-500 dark:text-sky-200/80">
-            {siteConfig.navigation.map((n) => (
-              <li key={n.href}>
-                {n.href.startsWith("/") ? (
+            {siteConfig.navigation.flatMap(item => 
+              item.children ? item.children : [item]
+            ).map((n, idx) => (
+              <li key={n.href || idx}>
+                {n.href && n.href.startsWith("/") ? (
                   <Link to={n.href} className="hover:text-sky-600 dark:hover:text-cyan-300 transition-colors">
                     {n.label}
                   </Link>
-                ) : (
+                ) : n.href ? (
                   <a href={n.href} className="hover:text-sky-600 dark:hover:text-cyan-300 transition-colors">
                     {n.label}
                   </a>
-                )}
+                ) : null}
               </li>
             ))}
           </ul>

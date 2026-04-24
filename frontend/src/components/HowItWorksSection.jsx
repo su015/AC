@@ -1,28 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
 import siteConfig from "../config/siteConfig";
+import SectionLabel from "./ui/SectionLabel";
+import { Play } from "lucide-react";
 
 const HowItWorksSection = () => {
   return (
     <section
       data-testid="how-it-works-section"
-      className="relative py-20 md:py-28 ir-frost-bg"
+      className="relative py-12 md:py-16 ir-frost-bg"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto"
-        >
-          <span className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-sky-600">
-            How It Works
-          </span>
+        <div className="text-center max-w-2xl mx-auto flex flex-col items-center">
+          <SectionLabel icon={Play} label="How It Works" />
           <h2 className="mt-3 font-display text-3xl md:text-5xl font-black text-[#0C4A6E] leading-tight">
             Four steps. <span className="ir-text-gradient">Zero hassle.</span>
           </h2>
-        </motion.div>
+        </div>
 
         <div className="mt-16 relative">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 relative">

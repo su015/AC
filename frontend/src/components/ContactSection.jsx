@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import siteConfig from "../config/siteConfig";
+import SectionLabel from "./ui/SectionLabel";
 
 const SERVICE_OPTIONS = [
   "AC Installation",
@@ -87,20 +88,14 @@ const ContactSection = () => {
     <section
       id="contact"
       data-testid="contact-section"
-      className="relative py-20 md:py-28"
+      className="relative py-12 md:py-16"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Left: info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+          <div
           >
-            <span className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400">
-              Contact
-            </span>
+            <SectionLabel icon={PhoneCall} label="Contact" />
             <h2 className="mt-3 font-display text-4xl md:text-6xl font-black text-[#0C4A6E] dark:text-sky-50 leading-tight tracking-tight">
               Let's get you <span className="ir-text-gradient">cool again.</span>
             </h2>
@@ -175,7 +170,7 @@ const ContactSection = () => {
                  </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right: Stepper form */}
           <motion.div

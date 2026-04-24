@@ -10,7 +10,7 @@ import {
   ShoppingBag
 } from "lucide-react";
 import siteConfig from "../config/siteConfig";
-import TextType from "./ui/TextType";
+import SectionLabel from "./ui/SectionLabel";
 
 const ICONS = {
   remote: Radio,
@@ -26,7 +26,7 @@ const GRADIENTS = {
   cover: "from-indigo-300 via-sky-400 to-cyan-300",
 };
 
-import TiltedCard from "./ui/TiltedCard";
+
 import { useCart } from "../context/CartContext";
 
 const ShopSection = () => {
@@ -42,7 +42,7 @@ const ShopSection = () => {
     <section
       id="shop"
       data-testid="shop-section"
-      className="relative py-20 md:py-28"
+      className="relative pt-12 md:pt-16 pb-12 md:pb-16"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <motion.div
@@ -53,22 +53,13 @@ const ShopSection = () => {
           className="max-w-2xl"
           ref={containerRef}
         >
-          <span className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400">
-            Accessories Shop
-          </span>
+          <SectionLabel icon={ShoppingBag} label="Accessories Shop" />
           <h2 className="mt-3 font-display text-4xl md:text-6xl font-black text-[#0C4A6E] dark:text-sky-50 leading-tight tracking-tight">
             Genuine parts. <span className="ir-text-gradient">Same-day delivery.</span>
           </h2>
-          <div className="mt-4 text-slate-600 dark:text-slate-400 text-base md:text-lg">
-            <TextType
-              text="Tap any product to enquire instantly on WhatsApp. We confirm stock, share photos and arrange delivery in Noida within the same day."
-              typingSpeed={40}
-              startOnVisible={true}
-              showCursor={true}
-              cursorCharacter="_"
-              loop={false}
-            />
-          </div>
+          <p className="mt-4 text-slate-600 dark:text-slate-400 text-base md:text-lg">
+            Tap any product to enquire instantly on WhatsApp. We confirm stock, share photos and arrange delivery in Noida within the same day.
+          </p>
         </motion.div>
 
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -116,7 +107,7 @@ const ShopSection = () => {
                       e.stopPropagation();
                       addToCart(product);
                     }}
-                    className="bg-sky-500 hover:bg-sky-600 text-white px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-[10px] md:text-sm transition-all shadow-xl shadow-sky-500/20 w-full sm:w-auto"
+                    className="bg-sky-500 hover:bg-sky-600 text-white px-4 md:px-5 py-2 md:py-2.5 rounded-xl font-bold text-[10px] md:text-xs transition-all shadow-lg shadow-sky-500/20 w-full sm:w-auto whitespace-nowrap"
                   >
                     Add to cart
                   </motion.button>

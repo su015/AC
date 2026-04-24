@@ -5,7 +5,7 @@ import siteConfig from "../config/siteConfig";
 
 const CTASection = () => {
   return (
-    <section data-testid="cta-section" className="relative py-20 md:py-24">
+    <section data-testid="cta-section" className="relative py-12 md:py-16">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

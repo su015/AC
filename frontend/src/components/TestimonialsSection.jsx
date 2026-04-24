@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import siteConfig from "../config/siteConfig";
+import SectionLabel from "./ui/SectionLabel";
 
 const TestimonialsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,12 +22,10 @@ const TestimonialsSection = () => {
   }, [currentIndex, isPaused]);
 
   return (
-    <section className="relative py-24 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+    <section className="relative py-12 md:py-16 bg-slate-50 dark:bg-slate-950 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-24">
-          <span className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400">
-            Success Stories
-          </span>
+        <div className="text-center mb-24 flex flex-col items-center">
+          <SectionLabel icon={Star} label="Success Stories" />
           <h2 className="mt-3 font-display text-3xl md:text-5xl font-black text-[#0C4A6E] dark:text-sky-50 leading-tight">
             Loved by <span className="ir-text-gradient">10,000+ Noida homes.</span>
           </h2>

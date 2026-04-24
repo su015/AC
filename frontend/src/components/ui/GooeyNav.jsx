@@ -149,12 +149,17 @@ const GooeyNav = ({
     if (!navRef.current || !containerRef.current) return;
     const activeLi = navRef.current.querySelectorAll('li')[activeIndex];
     if (activeLi) {
+      if (filterRef.current) filterRef.current.style.opacity = '1';
+      if (textRef.current) textRef.current.style.opacity = '1';
       updateEffectPosition(activeLi);
       textRef.current?.classList.add('active');
       // Trigger gooey effect on initial load
       if (filterRef.current && filterRef.current.querySelectorAll('.particle').length === 0) {
         makeParticles(filterRef.current);
       }
+    } else {
+      if (filterRef.current) filterRef.current.style.opacity = '0';
+      if (textRef.current) textRef.current.style.opacity = '0';
     }
     
     const resizeObserver = new ResizeObserver(() => {

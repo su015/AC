@@ -9,6 +9,8 @@ import {
   HeartHandshake,
 } from "lucide-react";
 import siteConfig from "../config/siteConfig";
+import SectionLabel from "./ui/SectionLabel";
+import { Heart } from "lucide-react";
 
 const ICONS = { Zap, Award, IndianRupee, ShieldCheck, MapPin, HeartHandshake };
 
@@ -16,23 +18,15 @@ const WhyChooseUsSection = () => {
   return (
     <section
       data-testid="why-choose-us-section"
-      className="relative py-20 md:py-28"
+      className="relative py-12 md:py-16"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-2xl"
-        >
-          <span className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-sky-600">
-            Why Choose Us
-          </span>
+        <div className="max-w-2xl">
+          <SectionLabel icon={Heart} label="Why Choose Us" />
           <h2 className="mt-3 font-display text-3xl md:text-5xl font-black text-[#0C4A6E] leading-tight">
             Noida's most trusted <span className="ir-text-gradient">cooling experts.</span>
           </h2>
-        </motion.div>
+        </div>
 
         <style>
           {`

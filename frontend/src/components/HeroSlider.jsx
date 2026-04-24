@@ -4,9 +4,6 @@ import { ArrowRight, ChevronLeft, ChevronRight, PhoneCall } from "lucide-react";
 import siteConfig from "../config/siteConfig";
 import VariableProximity from "./ui/VariableProximity";
 import Magnetic from "./ui/Magnetic";
-import TextReveal from "./ui/TextReveal";
-
-const AC3DModel = lazy(() => import("./AC3DModel"));
 
 const StatCounter = ({ value, suffix = "", prefix = "" }) => {
   const ref = useRef(null);
@@ -75,7 +72,7 @@ const HeroSlider = () => {
     <section
       id="home"
       data-testid="hero-section"
-      className="relative min-h-[92vh] pt-20 md:pt-24 overflow-hidden"
+      className="relative min-h-0 pt-32 md:pt-40 pb-8 md:pb-12 overflow-hidden"
     >
       <div className="ir-frost-overlay absolute inset-0 pointer-events-none" />
 
@@ -90,7 +87,7 @@ const HeroSlider = () => {
         style={{ animationDelay: "2.4s" }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-10 lg:gap-6 items-center py-10 lg:py-6">
+      <div className="relative max-w-7xl mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-10 lg:gap-6 items-center">
         {/* Left: copy + CTA */}
         <div className="relative z-10">
           <AnimatePresence mode="wait">
@@ -109,8 +106,7 @@ const HeroSlider = () => {
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                 {slide.eyebrow}
               </span>
-              <TextReveal delay={0.2}>
-                <h1
+              <h1
                   data-testid="hero-title"
                   className="font-display text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] text-[#0C4A6E] dark:text-sky-50 tracking-tight"
                 >
@@ -124,10 +120,14 @@ const HeroSlider = () => {
                     </span>
                   ))}
                 </h1>
-              </TextReveal>
-              <p className="mt-6 text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="mt-6 text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed"
+              >
                 {slide.subtitle}
-              </p>
+              </motion.p>
               <div className="mt-8 flex flex-wrap items-center gap-6">
                 <Magnetic>
                   <a
@@ -227,29 +227,52 @@ const HeroSlider = () => {
           </div>
         </div>
 
-        {/* Right: 3D AC */}
+        {/* Right: Dynamic Image */}
         <div
-          className="relative h-[340px] sm:h-[440px] lg:h-[560px] flex items-center justify-center -mt-10 lg:-mt-20"
-          data-testid="hero-3d-container"
+          className="relative h-[400px] sm:h-[500px] lg:h-[650px] flex items-center justify-center -mt-10 lg:-mt-20 px-4"
+          data-testid="hero-image-container"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-sky-400/5 to-cyan-400/5 blur-[120px] rounded-full" />
-          <Suspense
-            fallback={
-              <div className="w-full h-full flex items-center justify-center text-sky-400 text-sm">
-                Loading 3D Preview…
-              </div>
-            }
-          >
-            <AC3DModel />
-          </Suspense>
+          <div className="absolute inset-0 bg-gradient-to-br from-sky-400/10 to-cyan-400/10 blur-[120px] rounded-full" />
           
-          <div className="absolute bottom-10 left-4 right-4 flex items-center justify-between text-[10px] md:text-xs text-sky-900 dark:text-sky-300 font-black tracking-widest">
-            <span className="px-5 py-2 rounded-xl bg-white/30 dark:bg-slate-900/30 backdrop-blur-xl border border-white/20 dark:border-slate-800 shadow-2xl">
-              REAL-TIME 3D PREVIEW
-            </span>
-            <span className="px-5 py-2 rounded-xl bg-white/30 dark:bg-slate-900/30 backdrop-blur-xl border border-white/20 dark:border-slate-800 shadow-2xl">
-              ACTIVE COOLING · 18°C
-            </span>
+          <div className="relative w-full h-full flex items-center justify-center">
+            {/* Trust Badges - Outside AnimatePresence for stability */}
+            <motion.div
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-10 right-0 md:-right-6 px-5 py-2.5 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-sky-100 dark:border-slate-700 shadow-2xl z-20 hidden md:block"
+            >
+              <span className="text-[11px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">Premium Quality</span>
+            </motion.div>
+            
+            <motion.div
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute bottom-10 left-0 md:-left-6 px-5 py-2.5 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-sky-100 dark:border-slate-700 shadow-2xl z-20 hidden md:block"
+            >
+              <span className="text-[11px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-[0.2em]">Noida's #1 Choice</span>
+            </motion.div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={slide.key}
+                initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ opacity: 0, scale: 1.05, rotate: 2 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="relative w-full h-full flex items-center justify-center"
+              >
+                <div className="relative group">
+                  {/* Floating Glow */}
+                  <div className="absolute -inset-6 bg-sky-400/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  
+                  <img 
+                    src={slide.image} 
+                    alt={slide.title}
+                    className="relative w-full h-auto max-h-[550px] object-contain drop-shadow-[0_35px_35px_rgba(14,165,233,0.3)] rounded-[2.5rem]"
+                  />
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

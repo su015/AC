@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { Menu, X, Snowflake, ShoppingBag, LogIn, UserPlus } from "lucide-react";
+import { Menu, X, Snowflake, ShoppingBag, LogIn, ChevronDown } from "lucide-react";
 import siteConfig from "../config/siteConfig";
 import ThemeToggle from "./ThemeToggle";
 import GooeyNav from "./ui/GooeyNav";
@@ -14,6 +14,9 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
+
+  const mainItems = siteConfig.navigation.filter(item => !item.children);
+  const moreItem = siteConfig.navigation.find(item => item.children);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -51,12 +54,16 @@ const Navbar = () => {
     };
   }, []);
 
-  // Determine active index based on current path, hash, or scroll position
-  const activeIndex = siteConfig.navigation.findIndex(item => {
-    // If we have an active section from scroll spy, prioritize it for the home page
+  // Determine active index relative to mainItems
+  const activeIndex = mainItems.findIndex(item => {
+    if (!item.href) return false;
+    
+    // If we have an active section from scroll spy or a hash in URL, prioritize it
     if (location.pathname === "/") {
-      if (!activeSection && item.href === "/") return true;
+      const currentHash = location.hash.replace("#", "");
+      if (currentHash && item.href.includes(`#${currentHash}`)) return true;
       if (activeSection && item.href.includes(`#${activeSection}`)) return true;
+      if (!activeSection && !currentHash && item.href === "/") return true;
     }
     
     // Fallback to URL matching
@@ -67,7 +74,7 @@ const Navbar = () => {
     return location.pathname.startsWith(item.href);
   });
 
-  const safeActiveIndex = activeIndex === -1 ? 0 : activeIndex;
+  const safeActiveIndex = activeIndex;
 
   return (
     <header
@@ -97,8 +104,32 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <nav className="hidden md:flex items-center">
-          <GooeyNav items={siteConfig.navigation} activeIndex={safeActiveIndex} />
+        <nav className="hidden md:flex items-center gap-1">
+          <GooeyNav items={mainItems} activeIndex={safeActiveIndex} />
+          
+          {moreItem && (
+            <div className="relative group ml-1">
+              <button className="flex items-center gap-1.5 py-2 px-4 rounded-full text-[13px] font-bold uppercase tracking-wider text-slate-600 dark:text-sky-200/70 hover:text-sky-600 dark:hover:text-white transition-all">
+                {moreItem.label}
+                <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
+              </button>
+
+              {/* Dropdown Menu */}
+              <div className="absolute top-full right-0 pt-4 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50">
+                <div className="w-48 bg-white dark:bg-slate-900 rounded-[1.5rem] border border-sky-100 dark:border-slate-800 shadow-2xl overflow-hidden p-2">
+                  {moreItem.children.map((child, idx) => (
+                    <Link
+                      key={idx}
+                      to={child.href}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-sky-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-white transition-all group/item"
+                    >
+                      <span className="text-[13px] font-bold uppercase tracking-wider">{child.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </nav>
 
         <div className="flex items-center gap-2 md:gap-4">
@@ -138,26 +169,16 @@ const Navbar = () => {
             </AnimatePresence>
           </Link>
           <div className="hidden lg:flex items-center gap-6 ml-2">
-            <Link 
-              to="/auth" 
-              state={{ mode: 'login' }}
-              className="flex items-center gap-2 text-sm font-bold text-[#0C4A6E] dark:text-sky-100 hover:text-sky-500 transition-colors group"
-            >
-              <motion.div whileHover={{ x: 3 }} transition={{ type: "spring", stiffness: 400 }}>
-                  <LogIn className="w-4 h-4 text-sky-500" />
-              </motion.div>
-              Login
-            </Link>
             <Magnetic>
               <Link
                 to="/auth"
-                state={{ mode: 'signup' }}
-                className="ir-btn flex items-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-400 text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-lg shadow-sky-300/40"
+                state={{ mode: 'login' }}
+                className="ir-btn flex items-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-400 text-white px-8 py-2.5 rounded-full font-bold text-sm shadow-lg shadow-sky-300/40 hover:shadow-sky-400/50 transition-all group"
               >
                 <motion.div whileHover={{ rotate: 15 }} transition={{ type: "spring", stiffness: 400 }}>
-                    <UserPlus className="w-4 h-4" />
+                    <LogIn className="w-4 h-4" />
                 </motion.div>
-                Sign Up
+                Login
               </Link>
             </Magnetic>
           </div>
@@ -183,12 +204,32 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="md:hidden border-t border-sky-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl overflow-hidden overscroll-contain"
           >
-            <div className="px-6 py-8 flex flex-col gap-2">
+            <div className="px-6 py-8 flex flex-col gap-1">
+              {/* Main Navigation Items */}
               {siteConfig.navigation.map((n, i) => {
-                const isInternal = n.href.startsWith("/");
-                const Component = isInternal ? Link : "a";
-                const props = isInternal ? { to: n.href } : { href: n.href };
-                
+                if (n.children) {
+                  return n.children.map((child, childIdx) => (
+                    <motion.div
+                      key={child.href}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: (i + childIdx) * 0.05 + 0.1 }}
+                    >
+                      <Link
+                        to={child.href}
+                        onClick={() => setOpen(false)}
+                        className="py-3.5 text-lg font-bold text-[#0C4A6E] dark:text-sky-100 border-b border-sky-50 dark:border-slate-800/50 flex items-center justify-between group"
+                      >
+                        <span className="flex items-center gap-3">
+                          <div className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+                          {child.label}
+                        </span>
+                        <span className="text-sky-400">→</span>
+                      </Link>
+                    </motion.div>
+                  ));
+                }
+
                 return (
                   <motion.div
                     key={n.href}
@@ -196,15 +237,14 @@ const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 + 0.1 }}
                   >
-                    <Component
-                      {...props}
+                    <Link
+                      to={n.href}
                       onClick={() => setOpen(false)}
-                      data-testid={`mobile-nav-${n.label.toLowerCase()}`}
-                      className="py-3 text-lg font-bold text-[#0C4A6E] dark:text-sky-100 border-b border-sky-50 dark:border-slate-800/50 flex items-center justify-between group"
+                      className="py-3.5 text-lg font-bold text-[#0C4A6E] dark:text-sky-100 border-b border-sky-50 dark:border-slate-800/50 flex items-center justify-between group"
                     >
                       {n.label}
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                    </Component>
+                      <span className="text-sky-400">→</span>
+                    </Link>
                   </motion.div>
                 );
               })}
@@ -213,19 +253,10 @@ const Navbar = () => {
                   to="/auth"
                   state={{ mode: 'login' }}
                   onClick={() => setOpen(false)}
-                  className="flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-[#0C4A6E] dark:text-sky-100 border border-sky-100 dark:border-slate-800"
-                >
-                  <LogIn className="w-5 h-5 text-sky-500" />
-                  Login
-                </Link>
-                <Link
-                  to="/auth"
-                  state={{ mode: 'signup' }}
-                  onClick={() => setOpen(false)}
                   className="flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-400 text-white py-4 rounded-2xl font-bold shadow-xl shadow-sky-500/20"
                 >
-                  <UserPlus className="w-5 h-5" />
-                  Sign Up
+                  <LogIn className="w-5 h-5" />
+                  Login
                 </Link>
               </div>
             </div>
